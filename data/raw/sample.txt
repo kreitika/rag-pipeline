@@ -1,0 +1,20 @@
+Authentication Service — On-Call Runbook
+
+This runbook is for engineers responding to alerts for the authentication service.
+
+ALERT: High Error Rate
+If error rate exceeds 1%, check the following:
+- Database connection pool exhaustion
+- Upstream identity provider outage
+- Recent deployment causing regressions
+
+ALERT: High Latency
+If P99 latency exceeds 2000ms:
+- Check cache hit rate in Redis
+- Look for slow queries in Postgres logs
+- Verify CDN is not routing incorrectly
+
+ESCALATION
+If you cannot resolve within 30 minutes, escalate to the platform team
+via the #incidents Slack channel. Page the on-call manager if revenue
+impact is confirmed.

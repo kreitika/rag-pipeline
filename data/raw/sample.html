@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Reference</title>
+</head>
+<body>
+    <h1>Authentication API Reference</h1>
+
+    <h2>POST /auth/login</h2>
+    <p>Authenticates a user and returns a JWT token.</p>
+    <h3>Request Body</h3>
+    <p>email (string, required): The user's email address.</p>
+    <p>password (string, required): The user's password.</p>
+    <h3>Response</h3>
+    <p>Returns a JSON object containing the access token and expiry time.</p>
+
+    <h2>POST /auth/logout</h2>
+    <p>Invalidates the user's current session token.</p>
+    <h3>Request Headers</h3>
+    <p>Authorization (required): Bearer token from login.</p>
+
+    <h2>GET /auth/verify</h2>
+    <p>Verifies whether a token is still valid.</p>
+    <p>Returns 200 if valid, 401 if expired or invalid.</p>
+</body>
+</html>
