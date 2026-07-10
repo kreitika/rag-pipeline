@@ -44,16 +44,16 @@ def idk_response(query: str, chunks: list[dict], confidence: dict) -> dict:
 def full_pipeline(query: str, top_k: int = 3) -> dict:
     print(f"\nRunning RAG pipeline for: '{query}'")
 
-    # Stage 1: Retrieve
+    # Stage 1: Retrieve ONCE
     print("  [1/4] Retrieving chunks...")
     chunks = rerank(query, top_k=top_k)
 
     if not chunks:
         return idk_response(query, [], {"composite_score": 0.0})
 
-    # Stage 2: Generate
+    # Stage 2: Generate — pass chunks directly, no second rerank
     print("  [2/4] Generating answer...")
-    result = generate(query, top_k=top_k)
+    result = generate(query, chunks=chunks)
     answer = result["answer"]
 
     # Stage 3: Verify citations
@@ -70,7 +70,6 @@ def full_pipeline(query: str, top_k: int = 3) -> dict:
         answer=answer,
     )
 
-    # Check confidence threshold
     if not confidence["confident"]:
         print(f"  Low confidence ({confidence['composite_score']}) — returning IDK response")
         return idk_response(query, chunks, confidence)
@@ -78,18 +77,18 @@ def full_pipeline(query: str, top_k: int = 3) -> dict:
     citations = parse_citations(answer, chunks)
 
     return {
-        "query":            query,
-        "answer":           answer,
-        "confident":        True,
-        "composite_score":  confidence["composite_score"],
-        "citations":        citations,
-        "chunks":           chunks,
-        "verification":     verification,
-        "confidence":       confidence,
-        "tokens_used":      result["tokens_used"],
+        "query":           query,
+        "answer":          answer,
+        "confident":       True,
+        "composite_score": confidence["composite_score"],
+        "citations":       citations,
+        "chunks":          chunks,
+        "verification":    verification,
+        "confidence":      confidence,
+        "tokens_used":     result["tokens_used"],
     }
 
-
+    
 
 if __name__ == "__main__":
     # Test 1: Question we can answer

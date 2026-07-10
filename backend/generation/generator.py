@@ -7,10 +7,12 @@ from backend.retrieval.reranker import rerank
 load_dotenv()
 
 
-def generate(query: str, top_k: int = 3) -> dict:
+def generate(query: str, chunks: list[dict] = None, top_k: int = 3) -> dict:
     client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
-    chunks = rerank(query, top_k=top_k)
+    if chunks is None:
+        chunks = rerank(query, top_k=top_k)
+
     prompt = build_prompt(query, chunks)
 
     response = client.chat.completions.create(

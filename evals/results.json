@@ -1,0 +1,999 @@
+{
+  "total_questions": 50,
+  "answerable": 40,
+  "unanswerable": 10,
+  "answer_correctness": 0.988,
+  "idk_accuracy": 1.0,
+  "results": [
+    {
+      "id": "Q001",
+      "question": "What is the rollback process if a deployment fails?",
+      "expected_answer": "Run ./scripts/revert.sh with the previous version number. This restores the previous Docker image and updates DNS automatically. The process takes approximately 3 minutes.",
+      "actual_answer": "If a deployment fails, follow these steps for the rollback process:\n\n1. **When to Roll Back**: Roll back if any of the following occur within 30 minutes of deployment:\n   - Error rate exceeds 1% for more than 2 consecutive minutes\n   - P99 latency exceeds 2000ms\n   - Any critical alerts fire in PagerDuty\n   - The on-call engineer makes the call [1].\n\n2. **How to Roll Back**: Run the revert script with the previous version number using the command:\n   ```bash\n   ./scripts/revert.sh v2.1.3\n   ```\n   This restores the previous Docker image and updates DNS automatically. The rollback process takes approximately 3 minutes [2].\n\n3. **Post-Rollback Actions**: After rolling back, notify the engineering channel in Slack immediately and create an incident report within 24 hours using the template in Notion [2].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": ""
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "rollback",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q002",
+      "question": "When should an engineer roll back a deployment?",
+      "expected_answer": "Roll back if error rate exceeds 1% for more than 2 consecutive minutes, P99 latency exceeds 2000ms, any critical alerts fire in PagerDuty, or the on-call engineer makes the call.",
+      "actual_answer": "An engineer should roll back a deployment if any of the following occur within 30 minutes of deployment:\n\n- The error rate exceeds 1% for more than 2 consecutive minutes\n- The P99 latency exceeds 2000ms\n- Any critical alerts fire in PagerDuty\n- The on-call engineer makes the call [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": ""
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "rollback",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q003",
+      "question": "What must be done after rolling back a deployment?",
+      "expected_answer": "Notify the engineering channel in Slack immediately and create an incident report within 24 hours using the template in Notion.",
+      "actual_answer": "After rolling back a deployment, you must notify the engineering channel in Slack immediately and create an incident report within 24 hours using the template in Notion [2].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer contains all the key information from the expected answer, including the actions to notify the engineering channel and create an incident report."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "rollback",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q004",
+      "question": "What are the prerequisites before deploying?",
+      "expected_answer": "All unit tests must pass locally with pytest, the pull request must be reviewed and approved by at least one senior engineer, the staging environment must be tested for at least 24 hours, and the on-call engineer must be notified via PagerDuty.",
+      "actual_answer": "The prerequisites before deploying are:\n\n1. All unit tests must pass locally with `pytest`.\n2. The pull request must be reviewed and approved by at least one senior engineer.\n3. The staging environment must be tested for at least 24 hours.\n4. The on-call engineer must be notified via PagerDuty [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly lists all the prerequisites for deployment as specified in the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "deployment",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q005",
+      "question": "How do you create a Git tag for a release?",
+      "expected_answer": "Run git tag -a v2.1.4 -m 'Release version 2.1.4' followed by git push origin v2.1.4.",
+      "actual_answer": "To create a Git tag for a release, use the following commands:\n\n```bash\ngit tag -a v2.1.4 -m \"Release version 2.1.4\"\ngit push origin v2.1.4\n```\n\nThis process is outlined in the deployment steps [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly provides the commands to create a Git tag and push it, matching the expected answer in both content and format."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "deployment",
+      "difficulty": "medium"
+    },
+    {
+      "id": "Q006",
+      "question": "How long does the deployment script take to run?",
+      "expected_answer": "The deployment process takes approximately 8 minutes.",
+      "actual_answer": "The deployment script takes approximately 8 minutes to run [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly states the duration of the deployment script, matching the key information from the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "deployment",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q007",
+      "question": "What dashboards should be monitored after a successful deployment?",
+      "expected_answer": "Monitor the error rate dashboard at grafana.internal/d/errors, the latency dashboard at grafana.internal/d/latency, and the infrastructure dashboard at grafana.internal/d/infra for 30 minutes.",
+      "actual_answer": "The following dashboards should be monitored after a successful deployment:\n\n- Error rate dashboard: grafana.internal/d/errors\n- Latency dashboard: grafana.internal/d/latency\n- Infrastructure dashboard: grafana.internal/d/infra [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly lists all the dashboards to be monitored and includes the relevant URLs, matching the expected answer's key information."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "monitoring",
+      "difficulty": "medium"
+    },
+    {
+      "id": "Q008",
+      "question": "How long should dashboards be monitored after deployment?",
+      "expected_answer": "Monitor dashboards for 30 minutes after deployment.",
+      "actual_answer": "Dashboards should be monitored for 30 minutes after deployment [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly states the duration for monitoring dashboards after deployment, matching the expected answer exactly."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "monitoring",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q009",
+      "question": "What is SEV1 and how should it be handled?",
+      "expected_answer": "SEV1 is a complete outage. The entire on-call team should be paged immediately.",
+      "actual_answer": "SEV1 refers to a complete outage. It should be handled by paging the entire on-call team immediately [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly includes all key information from the expected answer regarding SEV1 and how it should be handled."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "incidents",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q010",
+      "question": "What should you do if you cannot resolve an incident within 30 minutes?",
+      "expected_answer": "Escalate to the platform team via the #incidents Slack channel and page the on-call manager if revenue impact is confirmed.",
+      "actual_answer": "If you cannot resolve an incident within 30 minutes, you should escalate to the platform team via the #incidents Slack channel and page the on-call manager if revenue impact is confirmed [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly includes all the key information from the expected answer regarding escalation and paging the on-call manager."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "incidents",
+      "difficulty": "medium"
+    },
+    {
+      "id": "Q011",
+      "question": "What does the POST /auth/login endpoint return?",
+      "expected_answer": "It returns a JSON object containing the access token and expiry time.",
+      "actual_answer": "The POST /auth/login endpoint returns a JSON object containing the access token and expiry time [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly includes all key information from the expected answer regarding the return value of the endpoint."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "api",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q012",
+      "question": "What header is required for POST /auth/logout?",
+      "expected_answer": "The Authorization header with a Bearer token from login is required.",
+      "actual_answer": "The required header for POST /auth/logout is the Authorization header, which must contain the Bearer token from login [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly identifies the required Authorization header and specifies that it must contain the Bearer token from login, matching the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "api",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q013",
+      "question": "What does GET /auth/verify return if the token is expired?",
+      "expected_answer": "It returns a 401 status code.",
+      "actual_answer": "GET /auth/verify returns 401 if the token is expired or invalid [2].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly states that a 401 status code is returned if the token is expired, which aligns with the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "api",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q014",
+      "question": "What should you check when high latency alerts fire?",
+      "expected_answer": "Check cache hit rate in Redis, look for slow queries in Postgres logs, and verify CDN is not routing incorrectly.",
+      "actual_answer": "When high latency alerts fire, you should check the following:\n\n- Cache hit rate in Redis\n- Look for slow queries in Postgres logs\n- Verify CDN is not routing incorrectly [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly includes all key information from the expected answer without any omissions."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "incidents",
+      "difficulty": "medium"
+    },
+    {
+      "id": "Q015",
+      "question": "What is the company's parental leave policy?",
+      "expected_answer": null,
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.md, sample.pdf, sample.html\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "answer_exists": false,
+      "confident": false,
+      "correctness": {
+        "score": null,
+        "explanation": "N/A \u2014 unanswerable question"
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Correctly said IDK for unanswerable question"
+      },
+      "category": "hr",
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "Q016",
+      "question": "What programming language is the authentication service written in?",
+      "expected_answer": null,
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.txt, sample.md, sample.html\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "answer_exists": false,
+      "confident": false,
+      "correctness": {
+        "score": null,
+        "explanation": "N/A \u2014 unanswerable question"
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Correctly said IDK for unanswerable question"
+      },
+      "category": "engineering",
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "Q017",
+      "question": "How much does the infrastructure cost per month?",
+      "expected_answer": null,
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.md, sample.pdf\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "answer_exists": false,
+      "confident": false,
+      "correctness": {
+        "score": null,
+        "explanation": "N/A \u2014 unanswerable question"
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Correctly said IDK for unanswerable question"
+      },
+      "category": "finance",
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "Q018",
+      "question": "What is the revert script command for rolling back to version 2.1.3?",
+      "expected_answer": "Run ./scripts/revert.sh v2.1.3",
+      "actual_answer": "The revert script command for rolling back to version 2.1.3 is:\n\n```bash\n./scripts/revert.sh v2.1.3\n```\nThis command is found in the context block [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly provides the exact command needed to roll back to version 2.1.3, matching the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "rollback",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q019",
+      "question": "How do you deploy to production?",
+      "expected_answer": "Run ./scripts/deploy.sh with the version number from the repository root.",
+      "actual_answer": "To deploy to production, follow these steps:\n\n1. **Merge the Pull Request**: Once the pull request has been reviewed and approved by at least one senior engineer, merge it into the main branch. Ensure the CI pipeline runs the full test suite and shows a green checkmark before proceeding [3].\n\n2. **Tag the Release**: Create a Git tag for the release version using the following commands:\n   ```bash\n   git tag -a v2.1.4 -m \"Release version 2.1.4\"\n   git push origin v2.1.4\n   ``` [3].\n\n3. **Run the Deployment Script**: Execute the deployment script from the repository root with the command:\n   ```bash\n   ./scripts/deploy.sh v2.1.4\n   ```\n   This script will pull the tagged Docker image, run database migrations, update the load balancer, and perform a health check. The entire process takes approximately 8 minutes [1].\n\n4. **Prerequisites**: Ensure that all unit tests pass locally with `pytest`, the staging environment has been tested for at least 24 hours, and the on-call engineer has been notified via PagerDuty before deploying [2].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 1,
+        "max_score": 2,
+        "explanation": "The system's answer provides a detailed deployment process but does not explicitly mention running the script with the version number from the repository root, which is the key information in the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "deployment",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q020",
+      "question": "What happens if metrics are stable after 30 minutes post-deployment?",
+      "expected_answer": "The deployment is considered complete.",
+      "actual_answer": "If metrics are stable after 30 minutes post-deployment, the deployment is considered complete [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer directly matches the expected answer, providing the same key information clearly and accurately."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "monitoring",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q021",
+      "question": "What triggers the CI pipeline automatically?",
+      "expected_answer": "Merging the pull request into the main branch triggers the CI pipeline automatically.",
+      "actual_answer": "The CI pipeline is triggered automatically when the pull request is merged into the main branch [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly conveys the key information that merging the pull request into the main branch triggers the CI pipeline automatically, matching the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "deployment",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q022",
+      "question": "How many senior engineer approvals are needed before deploying?",
+      "expected_answer": "At least one senior engineer must review and approve the pull request.",
+      "actual_answer": "At least one senior engineer approval is needed before deploying [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly states that at least one senior engineer approval is needed before deploying, which matches the key information in the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "deployment",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q023",
+      "question": "How long must staging be tested before production deployment?",
+      "expected_answer": "The staging environment must be tested for at least 24 hours.",
+      "actual_answer": "Staging must be tested for at least 24 hours before production deployment [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly states that staging must be tested for at least 24 hours before production deployment, matching the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "deployment",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q024",
+      "question": "What command pushes the Git tag to origin?",
+      "expected_answer": "Run git push origin v2.1.4.",
+      "actual_answer": "The command that pushes the Git tag to origin is:\n\n```bash\ngit push origin v2.1.4\n```\n\nThis information is found in context [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly provides the command to push the Git tag to origin, matching the expected answer exactly."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "deployment",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q025",
+      "question": "What does the deploy script do after pulling the Docker image?",
+      "expected_answer": "It runs database migrations, updates the load balancer, and performs a health check.",
+      "actual_answer": "After pulling the Docker image, the deploy script runs database migrations, updates the load balancer, and performs a health check [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly includes all the key information from the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "deployment",
+      "difficulty": "medium"
+    },
+    {
+      "id": "Q026",
+      "question": "What is the maximum time window for deciding to roll back after deployment?",
+      "expected_answer": "The decision to roll back should be made within 30 minutes of deployment.",
+      "actual_answer": "The maximum time window for deciding to roll back after deployment is 30 minutes [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly states the maximum time window for deciding to roll back after deployment, matching the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "rollback",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q027",
+      "question": "What happens to DNS during a rollback?",
+      "expected_answer": "DNS is updated automatically by the revert script.",
+      "actual_answer": "During a rollback, DNS is updated automatically [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly states that DNS is updated automatically during a rollback, which matches the key information in the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "rollback",
+      "difficulty": "medium"
+    },
+    {
+      "id": "Q028",
+      "question": "How long does the rollback script take?",
+      "expected_answer": "The rollback process takes approximately 3 minutes.",
+      "actual_answer": "The rollback process takes approximately 3 minutes [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly provides the key information that the rollback process takes approximately 3 minutes, matching the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "rollback",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q029",
+      "question": "Where is the incident report template located?",
+      "expected_answer": "The incident report template is in Notion.",
+      "actual_answer": "The incident report template is located in Notion [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly identifies the location of the incident report template as Notion, matching the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "rollback",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q030",
+      "question": "What Slack channel should be notified after rollback?",
+      "expected_answer": "Notify the engineering channel in Slack immediately after rolling back.",
+      "actual_answer": "The Slack channel that should be notified after rollback is the engineering channel [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly identifies the engineering channel as the one to be notified after rollback, matching the key information in the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "rollback",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q031",
+      "question": "What is the URL for the error rate dashboard?",
+      "expected_answer": "The error rate dashboard is at grafana.internal/d/errors.",
+      "actual_answer": "The URL for the error rate dashboard is grafana.internal/d/errors [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly provides the URL for the error rate dashboard, matching the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "monitoring",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q032",
+      "question": "What is the URL for the latency dashboard?",
+      "expected_answer": "The latency dashboard is at grafana.internal/d/latency.",
+      "actual_answer": "The URL for the latency dashboard is grafana.internal/d/latency [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly provides the URL for the latency dashboard, matching the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "monitoring",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q033",
+      "question": "What is the URL for the infrastructure dashboard?",
+      "expected_answer": "The infrastructure dashboard is at grafana.internal/d/infra.",
+      "actual_answer": "The URL for the infrastructure dashboard is grafana.internal/d/infra [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly provides the URL for the infrastructure dashboard, matching the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "monitoring",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q034",
+      "question": "What is SEV2 and how should it be handled?",
+      "expected_answer": "SEV2 is a partial outage. Page the primary on-call engineer.",
+      "actual_answer": "SEV2 refers to a partial outage, and it should be handled by paging the primary on-call engineer [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly identifies SEV2 as a partial outage and specifies the action of paging the primary on-call engineer, matching the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "incidents",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q035",
+      "question": "What is SEV3 and how should it be handled?",
+      "expected_answer": "SEV3 is degraded performance. Create a ticket and monitor closely.",
+      "actual_answer": "SEV3 refers to a degraded performance incident. It should be handled by creating a ticket and monitoring the situation closely [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly identifies SEV3 as degraded performance and includes the necessary actions of creating a ticket and monitoring closely, matching the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "incidents",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q036",
+      "question": "What should you check first when a high error rate alert fires?",
+      "expected_answer": "Check for database connection pool exhaustion, upstream identity provider outage, and recent deployments causing regressions.",
+      "actual_answer": "When a high error rate alert fires, you should first check the following:\n\n1. Database connection pool exhaustion\n2. Upstream identity provider outage\n3. Recent deployment causing regressions [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly lists all the key points from the expected answer without any omissions."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "incidents",
+      "difficulty": "medium"
+    },
+    {
+      "id": "Q037",
+      "question": "How often should status be communicated during an incident?",
+      "expected_answer": "Communicate status every 15 minutes.",
+      "actual_answer": "Status should be communicated every 15 minutes during an incident [1][2].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly states that status should be communicated every 15 minutes during an incident, matching the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "incidents",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q038",
+      "question": "What does GET /auth/verify return if the token is valid?",
+      "expected_answer": "It returns a 200 status code.",
+      "actual_answer": "GET /auth/verify returns 200 if the token is valid [2].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly states that a 200 status code is returned if the token is valid, which matches the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "api",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q039",
+      "question": "What fields are required in the POST /auth/login request body?",
+      "expected_answer": "The email and password fields are required.",
+      "actual_answer": "The required fields in the POST /auth/login request body are:\n1. email (string, required): The user's email address.\n2. password (string, required): The user's password [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly identifies the required fields (email and password) and provides additional context, aligning well with the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "api",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q040",
+      "question": "What does POST /auth/logout invalidate?",
+      "expected_answer": "It invalidates the user's current session token.",
+      "actual_answer": "POST /auth/logout invalidates the user's current session token [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly states that POST /auth/logout invalidates the user's current session token, which matches the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "api",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q041",
+      "question": "What are the five incident response steps?",
+      "expected_answer": "Acknowledge the alert in PagerDuty within 5 minutes, join the incident Slack channel, identify the scope of impact, begin mitigation or escalate if needed, and communicate status every 15 minutes.",
+      "actual_answer": "The five incident response steps are:\n\n1. Acknowledge the alert in PagerDuty within 5 minutes.\n2. Join the incident Slack channel.\n3. Identify the scope of impact.\n4. Begin mitigation or escalate if needed.\n5. Communicate status every 15 minutes [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly lists all five incident response steps as outlined in the expected answer, matching both the content and order."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "incidents",
+      "difficulty": "medium"
+    },
+    {
+      "id": "Q042",
+      "question": "How soon must an alert be acknowledged in PagerDuty?",
+      "expected_answer": "Alerts must be acknowledged within 5 minutes.",
+      "actual_answer": "An alert must be acknowledged in PagerDuty within 5 minutes [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly states that alerts must be acknowledged within 5 minutes, matching the expected answer exactly."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "incidents",
+      "difficulty": "easy"
+    },
+    {
+      "id": "Q043",
+      "question": "What should be included in an incident report?",
+      "expected_answer": "The incident report should include the timeline, root cause, and action items.",
+      "actual_answer": "An incident report should include the timeline, root cause, and action items [1].",
+      "answer_exists": true,
+      "confident": true,
+      "correctness": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "The system's answer correctly includes all the key information from the expected answer."
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Attempted to answer an answerable question"
+      },
+      "category": "incidents",
+      "difficulty": "medium"
+    },
+    {
+      "id": "Q044",
+      "question": "What is the database schema for the users table?",
+      "expected_answer": null,
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.txt, sample.md, sample.html\nHowever, the confidence score (0.175) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "answer_exists": false,
+      "confident": false,
+      "correctness": {
+        "score": null,
+        "explanation": "N/A \u2014 unanswerable question"
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Correctly said IDK for unanswerable question"
+      },
+      "category": "engineering",
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "Q045",
+      "question": "Who is the current on-call engineer?",
+      "expected_answer": null,
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.md, sample.txt, sample.pdf\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "answer_exists": false,
+      "confident": false,
+      "correctness": {
+        "score": null,
+        "explanation": "N/A \u2014 unanswerable question"
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Correctly said IDK for unanswerable question"
+      },
+      "category": "incidents",
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "Q046",
+      "question": "What is the salary band for senior engineers?",
+      "expected_answer": null,
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.md, sample.pdf\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "answer_exists": false,
+      "confident": false,
+      "correctness": {
+        "score": null,
+        "explanation": "N/A \u2014 unanswerable question"
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Correctly said IDK for unanswerable question"
+      },
+      "category": "hr",
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "Q047",
+      "question": "What is the office address?",
+      "expected_answer": null,
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.pdf, sample.html\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "answer_exists": false,
+      "confident": false,
+      "correctness": {
+        "score": null,
+        "explanation": "N/A \u2014 unanswerable question"
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Correctly said IDK for unanswerable question"
+      },
+      "category": "hr",
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "Q048",
+      "question": "Which cloud provider hosts the infrastructure?",
+      "expected_answer": null,
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.txt, sample.md, sample.pdf\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "answer_exists": false,
+      "confident": false,
+      "correctness": {
+        "score": null,
+        "explanation": "N/A \u2014 unanswerable question"
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Correctly said IDK for unanswerable question"
+      },
+      "category": "engineering",
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "Q049",
+      "question": "What is the SLA for the authentication service?",
+      "expected_answer": null,
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.txt, sample.md, sample.html\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "answer_exists": false,
+      "confident": false,
+      "correctness": {
+        "score": null,
+        "explanation": "N/A \u2014 unanswerable question"
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Correctly said IDK for unanswerable question"
+      },
+      "category": "engineering",
+      "difficulty": "unanswerable"
+    },
+    {
+      "id": "Q050",
+      "question": "What version of Python does the service use?",
+      "expected_answer": null,
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.txt, sample.md, sample.html\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "answer_exists": false,
+      "confident": false,
+      "correctness": {
+        "score": null,
+        "explanation": "N/A \u2014 unanswerable question"
+      },
+      "idk_result": {
+        "score": 2,
+        "max_score": 2,
+        "explanation": "Correctly said IDK for unanswerable question"
+      },
+      "category": "engineering",
+      "difficulty": "unanswerable"
+    }
+  ]
+}
