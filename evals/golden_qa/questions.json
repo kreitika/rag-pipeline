@@ -1,0 +1,452 @@
+[
+    {
+      "id": "Q001",
+      "question": "What is the rollback process if a deployment fails?",
+      "expected_answer": "Run ./scripts/revert.sh with the previous version number. This restores the previous Docker image and updates DNS automatically. The process takes approximately 3 minutes.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "rollback"
+    },
+    {
+      "id": "Q002",
+      "question": "When should an engineer roll back a deployment?",
+      "expected_answer": "Roll back if error rate exceeds 1% for more than 2 consecutive minutes, P99 latency exceeds 2000ms, any critical alerts fire in PagerDuty, or the on-call engineer makes the call.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "rollback"
+    },
+    {
+      "id": "Q003",
+      "question": "What must be done after rolling back a deployment?",
+      "expected_answer": "Notify the engineering channel in Slack immediately and create an incident report within 24 hours using the template in Notion.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "rollback"
+    },
+    {
+      "id": "Q004",
+      "question": "What are the prerequisites before deploying?",
+      "expected_answer": "All unit tests must pass locally with pytest, the pull request must be reviewed and approved by at least one senior engineer, the staging environment must be tested for at least 24 hours, and the on-call engineer must be notified via PagerDuty.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "deployment"
+    },
+    {
+      "id": "Q005",
+      "question": "How do you create a Git tag for a release?",
+      "expected_answer": "Run git tag -a v2.1.4 -m 'Release version 2.1.4' followed by git push origin v2.1.4.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "medium",
+      "category": "deployment"
+    },
+    {
+      "id": "Q006",
+      "question": "How long does the deployment script take to run?",
+      "expected_answer": "The deployment process takes approximately 8 minutes.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "deployment"
+    },
+    {
+      "id": "Q007",
+      "question": "What dashboards should be monitored after a successful deployment?",
+      "expected_answer": "Monitor the error rate dashboard at grafana.internal/d/errors, the latency dashboard at grafana.internal/d/latency, and the infrastructure dashboard at grafana.internal/d/infra for 30 minutes.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "medium",
+      "category": "monitoring"
+    },
+    {
+      "id": "Q008",
+      "question": "How long should dashboards be monitored after deployment?",
+      "expected_answer": "Monitor dashboards for 30 minutes after deployment.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "monitoring"
+    },
+    {
+      "id": "Q009",
+      "question": "What is SEV1 and how should it be handled?",
+      "expected_answer": "SEV1 is a complete outage. The entire on-call team should be paged immediately.",
+      "source_document": "sample.pdf",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "incidents"
+    },
+    {
+      "id": "Q010",
+      "question": "What should you do if you cannot resolve an incident within 30 minutes?",
+      "expected_answer": "Escalate to the platform team via the #incidents Slack channel and page the on-call manager if revenue impact is confirmed.",
+      "source_document": "sample.txt",
+      "answer_exists": true,
+      "difficulty": "medium",
+      "category": "incidents"
+    },
+    {
+      "id": "Q011",
+      "question": "What does the POST /auth/login endpoint return?",
+      "expected_answer": "It returns a JSON object containing the access token and expiry time.",
+      "source_document": "sample.html",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "api"
+    },
+    {
+      "id": "Q012",
+      "question": "What header is required for POST /auth/logout?",
+      "expected_answer": "The Authorization header with a Bearer token from login is required.",
+      "source_document": "sample.html",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "api"
+    },
+    {
+      "id": "Q013",
+      "question": "What does GET /auth/verify return if the token is expired?",
+      "expected_answer": "It returns a 401 status code.",
+      "source_document": "sample.html",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "api"
+    },
+    {
+      "id": "Q014",
+      "question": "What should you check when high latency alerts fire?",
+      "expected_answer": "Check cache hit rate in Redis, look for slow queries in Postgres logs, and verify CDN is not routing incorrectly.",
+      "source_document": "sample.txt",
+      "answer_exists": true,
+      "difficulty": "medium",
+      "category": "incidents"
+    },
+    {
+      "id": "Q015",
+      "question": "What is the company's parental leave policy?",
+      "expected_answer": null,
+      "source_document": null,
+      "answer_exists": false,
+      "difficulty": "unanswerable",
+      "category": "hr"
+    },
+    {
+      "id": "Q016",
+      "question": "What programming language is the authentication service written in?",
+      "expected_answer": null,
+      "source_document": null,
+      "answer_exists": false,
+      "difficulty": "unanswerable",
+      "category": "engineering"
+    },
+    {
+      "id": "Q017",
+      "question": "How much does the infrastructure cost per month?",
+      "expected_answer": null,
+      "source_document": null,
+      "answer_exists": false,
+      "difficulty": "unanswerable",
+      "category": "finance"
+    },
+    {
+      "id": "Q018",
+      "question": "What is the revert script command for rolling back to version 2.1.3?",
+      "expected_answer": "Run ./scripts/revert.sh v2.1.3",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "rollback"
+    },
+    {
+      "id": "Q019",
+      "question": "How do you deploy to production?",
+      "expected_answer": "Run ./scripts/deploy.sh with the version number from the repository root.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "deployment"
+    },
+    {
+      "id": "Q020",
+      "question": "What happens if metrics are stable after 30 minutes post-deployment?",
+      "expected_answer": "The deployment is considered complete.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "monitoring"
+    },
+    {
+      "id": "Q021",
+      "question": "What triggers the CI pipeline automatically?",
+      "expected_answer": "Merging the pull request into the main branch triggers the CI pipeline automatically.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "deployment"
+    },
+    {
+      "id": "Q022",
+      "question": "How many senior engineer approvals are needed before deploying?",
+      "expected_answer": "At least one senior engineer must review and approve the pull request.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "deployment"
+    },
+    {
+      "id": "Q023",
+      "question": "How long must staging be tested before production deployment?",
+      "expected_answer": "The staging environment must be tested for at least 24 hours.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "deployment"
+    },
+    {
+      "id": "Q024",
+      "question": "What command pushes the Git tag to origin?",
+      "expected_answer": "Run git push origin v2.1.4.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "deployment"
+    },
+    {
+      "id": "Q025",
+      "question": "What does the deploy script do after pulling the Docker image?",
+      "expected_answer": "It runs database migrations, updates the load balancer, and performs a health check.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "medium",
+      "category": "deployment"
+    },
+    {
+      "id": "Q026",
+      "question": "What is the maximum time window for deciding to roll back after deployment?",
+      "expected_answer": "The decision to roll back should be made within 30 minutes of deployment.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "rollback"
+    },
+    {
+      "id": "Q027",
+      "question": "What happens to DNS during a rollback?",
+      "expected_answer": "DNS is updated automatically by the revert script.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "medium",
+      "category": "rollback"
+    },
+    {
+      "id": "Q028",
+      "question": "How long does the rollback script take?",
+      "expected_answer": "The rollback process takes approximately 3 minutes.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "rollback"
+    },
+    {
+      "id": "Q029",
+      "question": "Where is the incident report template located?",
+      "expected_answer": "The incident report template is in Notion.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "rollback"
+    },
+    {
+      "id": "Q030",
+      "question": "What Slack channel should be notified after rollback?",
+      "expected_answer": "Notify the engineering channel in Slack immediately after rolling back.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "rollback"
+    },
+    {
+      "id": "Q031",
+      "question": "What is the URL for the error rate dashboard?",
+      "expected_answer": "The error rate dashboard is at grafana.internal/d/errors.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "monitoring"
+    },
+    {
+      "id": "Q032",
+      "question": "What is the URL for the latency dashboard?",
+      "expected_answer": "The latency dashboard is at grafana.internal/d/latency.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "monitoring"
+    },
+    {
+      "id": "Q033",
+      "question": "What is the URL for the infrastructure dashboard?",
+      "expected_answer": "The infrastructure dashboard is at grafana.internal/d/infra.",
+      "source_document": "sample.md",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "monitoring"
+    },
+    {
+      "id": "Q034",
+      "question": "What is SEV2 and how should it be handled?",
+      "expected_answer": "SEV2 is a partial outage. Page the primary on-call engineer.",
+      "source_document": "sample.pdf",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "incidents"
+    },
+    {
+      "id": "Q035",
+      "question": "What is SEV3 and how should it be handled?",
+      "expected_answer": "SEV3 is degraded performance. Create a ticket and monitor closely.",
+      "source_document": "sample.pdf",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "incidents"
+    },
+    {
+      "id": "Q036",
+      "question": "What should you check first when a high error rate alert fires?",
+      "expected_answer": "Check for database connection pool exhaustion, upstream identity provider outage, and recent deployments causing regressions.",
+      "source_document": "sample.txt",
+      "answer_exists": true,
+      "difficulty": "medium",
+      "category": "incidents"
+    },
+    {
+      "id": "Q037",
+      "question": "How often should status be communicated during an incident?",
+      "expected_answer": "Communicate status every 15 minutes.",
+      "source_document": "sample.pdf",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "incidents"
+    },
+    {
+      "id": "Q038",
+      "question": "What does GET /auth/verify return if the token is valid?",
+      "expected_answer": "It returns a 200 status code.",
+      "source_document": "sample.html",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "api"
+    },
+    {
+      "id": "Q039",
+      "question": "What fields are required in the POST /auth/login request body?",
+      "expected_answer": "The email and password fields are required.",
+      "source_document": "sample.html",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "api"
+    },
+    {
+      "id": "Q040",
+      "question": "What does POST /auth/logout invalidate?",
+      "expected_answer": "It invalidates the user's current session token.",
+      "source_document": "sample.html",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "api"
+    },
+    {
+      "id": "Q041",
+      "question": "What are the five incident response steps?",
+      "expected_answer": "Acknowledge the alert in PagerDuty within 5 minutes, join the incident Slack channel, identify the scope of impact, begin mitigation or escalate if needed, and communicate status every 15 minutes.",
+      "source_document": "sample.pdf",
+      "answer_exists": true,
+      "difficulty": "medium",
+      "category": "incidents"
+    },
+    {
+      "id": "Q042",
+      "question": "How soon must an alert be acknowledged in PagerDuty?",
+      "expected_answer": "Alerts must be acknowledged within 5 minutes.",
+      "source_document": "sample.pdf",
+      "answer_exists": true,
+      "difficulty": "easy",
+      "category": "incidents"
+    },
+    {
+      "id": "Q043",
+      "question": "What should be included in an incident report?",
+      "expected_answer": "The incident report should include the timeline, root cause, and action items.",
+      "source_document": "sample.pdf",
+      "answer_exists": true,
+      "difficulty": "medium",
+      "category": "incidents"
+    },
+    {
+      "id": "Q044",
+      "question": "What is the database schema for the users table?",
+      "expected_answer": null,
+      "source_document": null,
+      "answer_exists": false,
+      "difficulty": "unanswerable",
+      "category": "engineering"
+    },
+    {
+      "id": "Q045",
+      "question": "Who is the current on-call engineer?",
+      "expected_answer": null,
+      "source_document": null,
+      "answer_exists": false,
+      "difficulty": "unanswerable",
+      "category": "incidents"
+    },
+    {
+      "id": "Q046",
+      "question": "What is the salary band for senior engineers?",
+      "expected_answer": null,
+      "source_document": null,
+      "answer_exists": false,
+      "difficulty": "unanswerable",
+      "category": "hr"
+    },
+    {
+      "id": "Q047",
+      "question": "What is the office address?",
+      "expected_answer": null,
+      "source_document": null,
+      "answer_exists": false,
+      "difficulty": "unanswerable",
+      "category": "hr"
+    },
+    {
+      "id": "Q048",
+      "question": "Which cloud provider hosts the infrastructure?",
+      "expected_answer": null,
+      "source_document": null,
+      "answer_exists": false,
+      "difficulty": "unanswerable",
+      "category": "engineering"
+    },
+    {
+      "id": "Q049",
+      "question": "What is the SLA for the authentication service?",
+      "expected_answer": null,
+      "source_document": null,
+      "answer_exists": false,
+      "difficulty": "unanswerable",
+      "category": "engineering"
+    },
+    {
+      "id": "Q050",
+      "question": "What version of Python does the service use?",
+      "expected_answer": null,
+      "source_document": null,
+      "answer_exists": false,
+      "difficulty": "unanswerable",
+      "category": "engineering"
+    }
+  ]
