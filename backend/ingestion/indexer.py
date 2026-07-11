@@ -18,12 +18,8 @@ BM25_PATH = Path("indexes/bm25/index.pkl")
 BATCH_SIZE = 100
 EMBEDDING_MODEL = "text-embedding-3-small"
 
-DOCUMENT_FILES = [
-    "data/raw/sample.md",
-    "data/raw/sample.txt",
-    "data/raw/sample.html",
-    "data/raw/sample.pdf",
-]
+DOCUMENTS_DIR = Path("data/raw")
+SUPPORTED_FORMATS = {".md", ".txt", ".html", ".pdf"}
 
 
 def embed_in_batches(chunks: list[Chunk], client: OpenAI) -> list[list[float]]:
@@ -71,10 +67,11 @@ def run_ingestion():
     # Step 1: Load all documents
     print("Loading documents...")
     documents = []
-    for file_path in DOCUMENT_FILES:
-        doc = load_document(file_path)
-        documents.append(doc)
-        print(f"  Loaded: {doc.source} ({doc.char_count} chars)")
+    for file_path in sorted(DOCUMENTS_DIR.iterdir()):
+        if file_path.suffix in SUPPORTED_FORMATS:
+            doc = load_document(str(file_path))
+            documents.append(doc)
+            print(f"  Loaded: {doc.source} ({doc.char_count} chars)")
 
     # Step 2: Chunk all documents
     print("\nChunking with section-aware strategy...")

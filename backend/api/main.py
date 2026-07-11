@@ -77,6 +77,29 @@ async def ask(request: AskRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/v1/ask/dense-only")
+async def ask_dense_only(request: AskRequest):
+    try:
+        from backend.retrieval.dense import dense_retrieve
+        from backend.generation.prompt_builder import build_prompt
+        from backend.generation.generator import generate
+        from openai import OpenAI
+
+        client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+
+        chunks = dense_retrieve(request.question, n_results=request.top_k)
+
+        result = generate(request.question, chunks=chunks)
+
+        return {
+            "question": request.question,
+            "answer":   result["answer"],
+            "method":   "dense-only",
+            "chunks":   len(chunks),
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.get("/v1/documents")
 async def list_documents():
