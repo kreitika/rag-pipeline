@@ -1,10 +1,10 @@
 from backend.retrieval.dense import dense_retrieve
 from backend.retrieval.sparse import sparse_retrieve
 
-def rrf_fuse(query: str, n_results: int = 10, k: int = 60) -> list[dict]:
-    dense_results = dense_retrieve(query, n_results=n_results)
-    sparse_results = sparse_retrieve(query, n_results=n_results)
-
+def rrf_fuse(query: str, n_results: int = 10, k: int = 60,
+             chroma_dir: str = None, bm25_path: str = None) -> list[dict]:
+    dense_results  = dense_retrieve(query, n_results=n_results, chroma_dir=chroma_dir)
+    sparse_results = sparse_retrieve(query, n_results=n_results, bm25_path=bm25_path)
     rrf_scores = {}
 
     for result in dense_results:

@@ -10,9 +10,10 @@ CHROMA_DIR = Path("indexes/chroma")
 EMBEDDING_MODEL = "text-embedding-3-small"
 
 
-def dense_retrieve(query: str, n_results: int = 10) -> list[dict]:
+def dense_retrieve(query: str, n_results: int = 10, chroma_dir: str = None) -> list[dict]:
     client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
-    chroma_client = chromadb.PersistentClient(path=str(CHROMA_DIR))
+    path = chroma_dir or str(CHROMA_DIR)
+    chroma_client = chromadb.PersistentClient(path=path)
     collection = chroma_client.get_collection(
         name="rag_chunks",
         embedding_function=None

@@ -41,12 +41,12 @@ def idk_response(query: str, chunks: list[dict], confidence: dict) -> dict:
 
 
 
-def full_pipeline(query: str, top_k: int = 3) -> dict:
+def full_pipeline(query: str, top_k: int = 3,
+                  chroma_dir: str = None, bm25_path: str = None) -> dict:
     print(f"\nRunning RAG pipeline for: '{query}'")
-
-    # Stage 1: Retrieve ONCE
     print("  [1/4] Retrieving chunks...")
-    chunks = rerank(query, top_k=top_k)
+    chunks = rerank(query, top_k=top_k,
+                    chroma_dir=chroma_dir, bm25_path=bm25_path)
 
     if not chunks:
         return idk_response(query, [], {"composite_score": 0.0})
@@ -88,7 +88,7 @@ def full_pipeline(query: str, top_k: int = 3) -> dict:
         "tokens_used":     result["tokens_used"],
     }
 
-    
+
 
 if __name__ == "__main__":
     # Test 1: Question we can answer

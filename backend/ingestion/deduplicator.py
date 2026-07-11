@@ -1,4 +1,5 @@
 import os
+import uuid
 from dotenv import load_dotenv
 from openai import OpenAI
 import chromadb
@@ -10,10 +11,9 @@ class Deduplicator:
     def __init__(self, threshold: float = 0.95):
         self.threshold = threshold
         self.client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
-        self.chroma = chromadb.Client()
+        self.chroma = chromadb.EphemeralClient()
         self.collection = self.chroma.get_or_create_collection(
-            name="dedup_index"
-        )
+            name=f"dedup_{uuid.uuid4().hex}")
         self.stored_count = 0
         self.skipped_count = 0
     

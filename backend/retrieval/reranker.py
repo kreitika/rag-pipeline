@@ -4,11 +4,12 @@ from backend.retrieval.fusion import rrf_fuse
 MODEL_NAME = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 
 
-def rerank(query: str, top_k: int = 5) -> list[dict]:
+def rerank(query: str, top_k: int = 5,
+           chroma_dir: str = None, bm25_path: str = None) -> list[dict]:
     print("  Loading cross-encoder model...")
     model = CrossEncoder(MODEL_NAME)
-
-    candidates = rrf_fuse(query, n_results=20)
+    candidates = rrf_fuse(query, n_results=20,
+                          chroma_dir=chroma_dir, bm25_path=bm25_path)
 
     if not candidates:
         return []

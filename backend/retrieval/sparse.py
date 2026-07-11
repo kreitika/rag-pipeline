@@ -3,8 +3,9 @@ from pathlib import Path
 
 BM25_PATH = Path("indexes/bm25/index.pkl")
 
-def sparse_retrieve(query: str, n_results: int = 10) -> list[dict]:
-    with open(BM25_PATH, "rb") as f:
+def sparse_retrieve(query: str, n_results: int = 10, bm25_path: str = None) -> list[dict]:
+    path = bm25_path or str(BM25_PATH)
+    with open(path, "rb") as f:
         data = pickle.load(f)
 
     bm25 = data["bm25"]

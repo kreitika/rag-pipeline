@@ -1,0 +1,16 @@
+{
+  "fixed": {
+    "strategy": "fixed",
+    "chunks_created": 11,
+    "questions_tested": 50,
+    "answer_correctness": 0.988,
+    "idk_accuracy": 1.0
+  },
+  "section": {
+    "strategy": "section",
+    "chunks_created": 12,
+    "questions_tested": 50,
+    "answer_correctness": 0.988,
+    "idk_accuracy": 1.0
+  }
+}
