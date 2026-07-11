@@ -9,7 +9,7 @@
       "id": "Q001",
       "question": "What is the rollback process if a deployment fails?",
       "expected_answer": "Run ./scripts/revert.sh with the previous version number. This restores the previous Docker image and updates DNS automatically. The process takes approximately 3 minutes.",
-      "actual_answer": "If a deployment fails, follow these steps for the rollback process:\n\n1. **When to Roll Back**: Roll back if any of the following occur within 30 minutes of deployment:\n   - Error rate exceeds 1% for more than 2 consecutive minutes\n   - P99 latency exceeds 2000ms\n   - Any critical alerts fire in PagerDuty\n   - The on-call engineer makes the call [1].\n\n2. **How to Roll Back**: Run the revert script with the previous version number using the command:\n   ```bash\n   ./scripts/revert.sh v2.1.3\n   ```\n   This restores the previous Docker image and updates DNS automatically. The rollback process takes approximately 3 minutes [2].\n\n3. **Post-Rollback Actions**: After rolling back, notify the engineering channel in Slack immediately and create an incident report within 24 hours using the template in Notion [2].",
+      "actual_answer": "If a deployment fails, follow these rollback procedures:\n\n1. **When to Roll Back**: Roll back if any of the following occur within 30 minutes of deployment:\n   - Error rate exceeds 1% for more than 2 consecutive minutes\n   - P99 latency exceeds 2000ms\n   - Any critical alerts fire in PagerDuty\n   - The on-call engineer makes the call [1].\n\n2. **How to Roll Back**: Run the revert script with the previous version number using the command:\n   ```bash\n   ./scripts/revert.sh v2.1.3\n   ```\n   This restores the previous Docker image and updates DNS automatically. The rollback process takes approximately 3 minutes [2].\n\n3. **Post-Rollback Actions**: After rolling back, notify the engineering channel in Slack immediately and create an incident report within 24 hours using the template in Notion [2].",
       "answer_exists": true,
       "confident": true,
       "correctness": {
@@ -23,7 +23,34 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "rollback",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "**When to Roll Back**: Roll back if any of the following occur within 30 minutes of deployment:\n   - Error rate exceeds 1% for more than 2 consecutive minutes\n   - P99 latency exceeds 2000ms\n   - Any critical alerts fire in PagerDuty\n   - The on-call engineer makes the call .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim as it explicitly lists the conditions under which a rollback should occur within 30 minutes of deployment.",
+            "citation_number": 1
+          },
+          {
+            "claim": "The rollback process takes approximately 3 minutes .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim by stating that \"The rollback process takes approximately 3 minutes.\"",
+            "citation_number": 2
+          },
+          {
+            "claim": "**Post-Rollback Actions**: After rolling back, notify the engineering channel in Slack immediately and create an incident report within 24 hours using the template in Notion .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim. \n\nThe source text explicitly states that after rolling back, one should notify the engineering channel in Slack immediately and create an incident report within 24 hours using the template in Notion.",
+            "citation_number": 2
+          }
+        ],
+        "supported": 3,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 3,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q002",
@@ -35,7 +62,7 @@
       "correctness": {
         "score": 2,
         "max_score": 2,
-        "explanation": ""
+        "explanation": "The system's answer correctly includes all the key conditions for rolling back a deployment as outlined in the expected answer."
       },
       "idk_result": {
         "score": 2,
@@ -43,7 +70,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "rollback",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "An engineer should roll back a deployment if any of the following occur within 30 minutes of deployment:\n\n- The error rate exceeds 1% for more than 2 consecutive minutes\n- The P99 latency exceeds 2000ms\n- Any critical alerts fire in PagerDuty\n- The on-call engineer makes the call .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q003",
@@ -63,7 +105,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "rollback",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "After rolling back a deployment, you must notify the engineering channel in Slack immediately and create an incident report within 24 hours using the template in Notion .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim because it explicitly states that after rolling back, one must notify the engineering channel in Slack immediately and create an incident report within 24 hours using the template in Notion.",
+            "citation_number": 2
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q004",
@@ -83,19 +140,34 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "deployment",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "The on-call engineer must be notified via PagerDuty .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text directly supports this claim as it explicitly states that \"the on-call engineer has been notified via PagerDuty\" is a prerequisite for deployment.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q005",
       "question": "How do you create a Git tag for a release?",
       "expected_answer": "Run git tag -a v2.1.4 -m 'Release version 2.1.4' followed by git push origin v2.1.4.",
-      "actual_answer": "To create a Git tag for a release, use the following commands:\n\n```bash\ngit tag -a v2.1.4 -m \"Release version 2.1.4\"\ngit push origin v2.1.4\n```\n\nThis process is outlined in the deployment steps [1].",
+      "actual_answer": "To create a Git tag for a release, use the following commands:\n\n```bash\ngit tag -a v2.1.4 -m \"Release version 2.1.4\"\ngit push origin v2.1.4\n```\nThis process is outlined in the documentation [1].",
       "answer_exists": true,
       "confident": true,
       "correctness": {
         "score": 2,
         "max_score": 2,
-        "explanation": "The system's answer correctly provides the commands to create a Git tag and push it, matching the expected answer in both content and format."
+        "explanation": "The system's answer correctly provides the commands to create a Git tag and push it, matching the expected answer."
       },
       "idk_result": {
         "score": 2,
@@ -103,7 +175,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "deployment",
-      "difficulty": "medium"
+      "difficulty": "medium",
+      "verification": {
+        "results": [
+          {
+            "claim": "To create a Git tag for a release, use the following commands:\n\n```bash\ngit tag -a v2.1.4 -m \"Release version 2.1.4\"\ngit push origin v2.1.4\n```\nThis process is outlined in the documentation .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text directly supports this claim by providing the exact commands needed to create a Git tag for a release.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q006",
@@ -115,7 +202,7 @@
       "correctness": {
         "score": 2,
         "max_score": 2,
-        "explanation": "The system's answer correctly states the duration of the deployment script, matching the key information from the expected answer."
+        "explanation": "The system's answer correctly states the duration of the deployment script, matching the expected answer."
       },
       "idk_result": {
         "score": 2,
@@ -123,7 +210,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "deployment",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "The deployment script takes approximately 8 minutes to run .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text explicitly states that the deployment process takes approximately 8 minutes.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q007",
@@ -135,7 +237,7 @@
       "correctness": {
         "score": 2,
         "max_score": 2,
-        "explanation": "The system's answer correctly lists all the dashboards to be monitored and includes the relevant URLs, matching the expected answer's key information."
+        "explanation": "The system's answer correctly lists the dashboards to monitor and includes the necessary URLs, matching the expected answer's content."
       },
       "idk_result": {
         "score": 2,
@@ -143,7 +245,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "monitoring",
-      "difficulty": "medium"
+      "difficulty": "medium",
+      "verification": {
+        "results": [
+          {
+            "claim": "The following dashboards should be monitored after a successful deployment:\n\n- Error rate dashboard: grafana.internal/d/errors\n- Latency dashboard: grafana.internal/d/latency\n- Infrastructure dashboard: grafana.internal/d/infra .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim because it explicitly lists the dashboards that should be monitored after a successful deployment.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q008",
@@ -163,7 +280,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "monitoring",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "Dashboards should be monitored for 30 minutes after deployment .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text explicitly states that dashboards should be monitored for 30 minutes after a successful deployment.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q009",
@@ -183,7 +315,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "incidents",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "It should be handled by paging the entire on-call team immediately .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim because it specifies that a SEV1 incident, which indicates a complete outage, requires paging the entire on-call team immediately.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q010",
@@ -203,7 +350,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "incidents",
-      "difficulty": "medium"
+      "difficulty": "medium",
+      "verification": {
+        "results": [
+          {
+            "claim": "If you cannot resolve an incident within 30 minutes, you should escalate to the platform team via the #incidents Slack channel and page the on-call manager if revenue impact is confirmed .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q011",
@@ -223,7 +385,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "api",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "The POST /auth/login endpoint returns a JSON object containing the access token and expiry time .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text explicitly states that the POST /auth/login endpoint \"returns a JSON object containing the access token and expiry time.\"",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q012",
@@ -235,7 +412,7 @@
       "correctness": {
         "score": 2,
         "max_score": 2,
-        "explanation": "The system's answer correctly identifies the required Authorization header and specifies that it must contain the Bearer token from login, matching the expected answer."
+        "explanation": "The system's answer correctly identifies the required header and specifies that it must contain the Bearer token from login, matching the expected answer."
       },
       "idk_result": {
         "score": 2,
@@ -243,7 +420,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "api",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "The required header for POST /auth/logout is the Authorization header, which must contain the Bearer token from login .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text explicitly states that the Authorization header is required for the POST /auth/logout request and specifies that it must contain the Bearer token from login.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q013",
@@ -263,7 +455,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "api",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "GET /auth/verify returns 401 if the token is expired or invalid .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text explicitly states that it returns 401 if the token is expired or invalid, which directly supports the claim.",
+            "citation_number": 2
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q014",
@@ -275,7 +482,7 @@
       "correctness": {
         "score": 2,
         "max_score": 2,
-        "explanation": "The system's answer correctly includes all key information from the expected answer without any omissions."
+        "explanation": "The system's answer correctly includes all key information from the expected answer."
       },
       "idk_result": {
         "score": 2,
@@ -283,13 +490,28 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "incidents",
-      "difficulty": "medium"
+      "difficulty": "medium",
+      "verification": {
+        "results": [
+          {
+            "claim": "When high latency alerts fire, you should check the following:\n\n- Cache hit rate in Redis\n- Look for slow queries in Postgres logs\n- Verify CDN is not routing incorrectly .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim because it explicitly lists the actions to take when high latency alerts fire, which matches the claim.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q015",
       "question": "What is the company's parental leave policy?",
       "expected_answer": null,
-      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.md, sample.pdf, sample.html\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.md, sample.html, sample.pdf\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
       "answer_exists": false,
       "confident": false,
       "correctness": {
@@ -302,13 +524,14 @@
         "explanation": "Correctly said IDK for unanswerable question"
       },
       "category": "hr",
-      "difficulty": "unanswerable"
+      "difficulty": "unanswerable",
+      "verification": null
     },
     {
       "id": "Q016",
       "question": "What programming language is the authentication service written in?",
       "expected_answer": null,
-      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.txt, sample.md, sample.html\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.md, sample.html, sample.txt\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
       "answer_exists": false,
       "confident": false,
       "correctness": {
@@ -321,7 +544,8 @@
         "explanation": "Correctly said IDK for unanswerable question"
       },
       "category": "engineering",
-      "difficulty": "unanswerable"
+      "difficulty": "unanswerable",
+      "verification": null
     },
     {
       "id": "Q017",
@@ -340,19 +564,20 @@
         "explanation": "Correctly said IDK for unanswerable question"
       },
       "category": "finance",
-      "difficulty": "unanswerable"
+      "difficulty": "unanswerable",
+      "verification": null
     },
     {
       "id": "Q018",
       "question": "What is the revert script command for rolling back to version 2.1.3?",
       "expected_answer": "Run ./scripts/revert.sh v2.1.3",
-      "actual_answer": "The revert script command for rolling back to version 2.1.3 is:\n\n```bash\n./scripts/revert.sh v2.1.3\n```\nThis command is found in the context block [1].",
+      "actual_answer": "The revert script command for rolling back to version 2.1.3 is:\n\n```bash\n./scripts/revert.sh v2.1.3\n```\nThis command restores the previous Docker image and updates DNS automatically [1].",
       "answer_exists": true,
       "confident": true,
       "correctness": {
         "score": 2,
         "max_score": 2,
-        "explanation": "The system's answer correctly provides the exact command needed to roll back to version 2.1.3, matching the expected answer."
+        "explanation": ""
       },
       "idk_result": {
         "score": 2,
@@ -360,13 +585,28 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "rollback",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "The revert script command for rolling back to version 2.1.3 is:\n\n```bash\n./scripts/revert.sh v2.1.3\n```\nThis command restores the previous Docker image and updates DNS automatically .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text directly supports this claim by providing the exact command for rolling back to version 2.1.3 and stating that it restores the previous Docker image and updates DNS automatically.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q019",
       "question": "How do you deploy to production?",
       "expected_answer": "Run ./scripts/deploy.sh with the version number from the repository root.",
-      "actual_answer": "To deploy to production, follow these steps:\n\n1. **Merge the Pull Request**: Once the pull request has been reviewed and approved by at least one senior engineer, merge it into the main branch. Ensure the CI pipeline runs the full test suite and shows a green checkmark before proceeding [3].\n\n2. **Tag the Release**: Create a Git tag for the release version using the following commands:\n   ```bash\n   git tag -a v2.1.4 -m \"Release version 2.1.4\"\n   git push origin v2.1.4\n   ``` [3].\n\n3. **Run the Deployment Script**: Execute the deployment script from the repository root with the command:\n   ```bash\n   ./scripts/deploy.sh v2.1.4\n   ```\n   This script will pull the tagged Docker image, run database migrations, update the load balancer, and perform a health check. The entire process takes approximately 8 minutes [1].\n\n4. **Prerequisites**: Ensure that all unit tests pass locally with `pytest`, the staging environment has been tested for at least 24 hours, and the on-call engineer has been notified via PagerDuty before deploying [2].",
+      "actual_answer": "To deploy to production, follow these steps:\n\n1. **Merge the Pull Request**: Once the pull request has been reviewed and approved by at least one senior engineer, merge it into the main branch. Ensure the CI pipeline shows a green checkmark before proceeding [3].\n\n2. **Tag the Release**: Create a Git tag for the release version using the following commands:\n   ```bash\n   git tag -a v2.1.4 -m \"Release version 2.1.4\"\n   git push origin v2.1.4\n   ``` [3].\n\n3. **Run the Deployment Script**: Execute the deployment script from the repository root with the command:\n   ```bash\n   ./scripts/deploy.sh v2.1.4\n   ```\n   This script will pull the tagged Docker image, run database migrations, update the load balancer, and perform a health check. The entire process takes approximately 8 minutes [1].\n\nBefore deploying, ensure that all unit tests pass locally with `pytest`, the staging environment has been tested for at least 24 hours, and the on-call engineer has been notified via PagerDuty [2].",
       "answer_exists": true,
       "confident": true,
       "correctness": {
@@ -380,7 +620,40 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "deployment",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "Ensure the CI pipeline shows a green checkmark before proceeding .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text explicitly states, \"Do not proceed until the CI pipeline shows a green checkmark,\" which directly supports the claim.",
+            "citation_number": 3
+          },
+          {
+            "claim": "**Tag the Release**: Create a Git tag for the release version using the following commands:\n   ```bash\n   git tag -a v2.1.4 -m \"Release version 2.1.4\"\n   git push origin v2.1.4\n   ``` .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text directly supports this claim by providing the exact commands needed to create a Git tag for the release version.",
+            "citation_number": 3
+          },
+          {
+            "claim": "The entire process takes approximately 8 minutes .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text explicitly states that the process takes approximately 8 minutes, which directly supports the claim.",
+            "citation_number": 1
+          },
+          {
+            "claim": "Before deploying, ensure that all unit tests pass locally with `pytest`, the staging environment has been tested for at least 24 hours, and the on-call engineer has been notified via PagerDuty .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim as it explicitly lists the requirement for all unit tests to pass, the staging environment to be tested for at least 24 hours, and the notification of the on-call engineer via PagerDuty before deployment.",
+            "citation_number": 2
+          }
+        ],
+        "supported": 4,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 4,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q020",
@@ -392,7 +665,7 @@
       "correctness": {
         "score": 2,
         "max_score": 2,
-        "explanation": "The system's answer directly matches the expected answer, providing the same key information clearly and accurately."
+        "explanation": "The system's answer correctly restates the expected answer, providing the same key information about the deployment being considered complete if metrics are stable after 30 minutes."
       },
       "idk_result": {
         "score": 2,
@@ -400,7 +673,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "monitoring",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "If metrics are stable after 30 minutes post-deployment, the deployment is considered complete .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text explicitly states that if all metrics are stable after 30 minutes, the deployment is considered complete, which directly supports the claim.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q021",
@@ -420,7 +708,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "deployment",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "The CI pipeline is triggered automatically when the pull request is merged into the main branch .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim because it explicitly states that the CI pipeline will trigger automatically when the pull request is merged into the main branch.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q022",
@@ -432,7 +735,7 @@
       "correctness": {
         "score": 2,
         "max_score": 2,
-        "explanation": "The system's answer correctly states that at least one senior engineer approval is needed before deploying, which matches the key information in the expected answer."
+        "explanation": "The system's answer correctly conveys the key information that at least one senior engineer approval is required before deploying, matching the expected answer."
       },
       "idk_result": {
         "score": 2,
@@ -440,7 +743,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "deployment",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "At least one senior engineer approval is needed before deploying .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text explicitly states that \"The pull request has been reviewed and approved by at least one senior engineer\" is a prerequisite for deployment.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q023",
@@ -460,19 +778,34 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "deployment",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "Staging must be tested for at least 24 hours before production deployment .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text explicitly states that \"the staging environment has been tested for at least 24 hours\" as a prerequisite for deploying to production, directly supporting the claim.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q024",
       "question": "What command pushes the Git tag to origin?",
       "expected_answer": "Run git push origin v2.1.4.",
-      "actual_answer": "The command that pushes the Git tag to origin is:\n\n```bash\ngit push origin v2.1.4\n```\n\nThis information is found in context [1].",
+      "actual_answer": "The command that pushes the Git tag to origin is:\n\n```bash\ngit push origin v2.1.4\n```\n\nThis information is found in the context block [1].",
       "answer_exists": true,
       "confident": true,
       "correctness": {
         "score": 2,
         "max_score": 2,
-        "explanation": "The system's answer correctly provides the command to push the Git tag to origin, matching the expected answer exactly."
+        "explanation": ""
       },
       "idk_result": {
         "score": 2,
@@ -480,7 +813,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "deployment",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "The command that pushes the Git tag to origin is:\n\n```bash\ngit push origin v2.1.4\n```\n\nThis information is found in the context block .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text directly includes the command `git push origin v2.1.4`, which confirms the claim.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q025",
@@ -500,7 +848,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "deployment",
-      "difficulty": "medium"
+      "difficulty": "medium",
+      "verification": {
+        "results": [
+          {
+            "claim": "After pulling the Docker image, the deploy script runs database migrations, updates the load balancer, and performs a health check .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim because it explicitly states that the deployment script runs database migrations, updates the load balancer, and performs a health check after pulling the Docker image.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q026",
@@ -512,7 +875,7 @@
       "correctness": {
         "score": 2,
         "max_score": 2,
-        "explanation": "The system's answer correctly states the maximum time window for deciding to roll back after deployment, matching the expected answer."
+        "explanation": "The system's answer correctly states the maximum time window for deciding to roll back after deployment, matching the expected answer exactly."
       },
       "idk_result": {
         "score": 2,
@@ -520,7 +883,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "rollback",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "The maximum time window for deciding to roll back after deployment is 30 minutes .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text explicitly states that a rollback should occur if any issues arise within 30 minutes of deployment, directly supporting the claim about the maximum time window for deciding to roll back.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q027",
@@ -540,7 +918,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "rollback",
-      "difficulty": "medium"
+      "difficulty": "medium",
+      "verification": {
+        "results": [
+          {
+            "claim": "During a rollback, DNS is updated automatically .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim because it explicitly states that the rollback process \"restores the previous Docker image and updates DNS automatically.\"",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q028",
@@ -560,7 +953,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "rollback",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "The rollback process takes approximately 3 minutes .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim because it explicitly states that \"The rollback process takes approximately 3 minutes.\"",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q029",
@@ -580,19 +988,34 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "rollback",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "The incident report template is located in Notion .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim because it explicitly states to create an incident report using the template in Notion.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q030",
       "question": "What Slack channel should be notified after rollback?",
       "expected_answer": "Notify the engineering channel in Slack immediately after rolling back.",
-      "actual_answer": "The Slack channel that should be notified after rollback is the engineering channel [1].",
+      "actual_answer": "The Slack channel that should be notified after a rollback is the engineering channel [1].",
       "answer_exists": true,
       "confident": true,
       "correctness": {
         "score": 2,
         "max_score": 2,
-        "explanation": "The system's answer correctly identifies the engineering channel as the one to be notified after rollback, matching the key information in the expected answer."
+        "explanation": "The system's answer correctly identifies the engineering channel as the one to be notified after a rollback, matching the key information in the expected answer."
       },
       "idk_result": {
         "score": 2,
@@ -600,7 +1023,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "rollback",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "The Slack channel that should be notified after a rollback is the engineering channel .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim because it explicitly states to notify the engineering channel in Slack after rolling back.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q031",
@@ -620,7 +1058,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "monitoring",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "The URL for the error rate dashboard is grafana.internal/d/errors .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text explicitly states that the URL for the error rate dashboard is grafana.internal/d/errors.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q032",
@@ -640,7 +1093,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "monitoring",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "The URL for the latency dashboard is grafana.internal/d/latency .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text explicitly states that the URL for the latency dashboard is grafana.internal/d/latency.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q033",
@@ -660,7 +1128,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "monitoring",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "The URL for the infrastructure dashboard is grafana.internal/d/infra .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text explicitly states that the URL for the infrastructure dashboard is grafana.internal/d/infra.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q034",
@@ -680,7 +1163,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "incidents",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "SEV2 refers to a partial outage, and it should be handled by paging the primary on-call engineer .",
+            "verdict": "PARTIAL",
+            "explanation": "SUPPORTED - the source text directly supports this claim because it explicitly states that SEV2 refers to a partial outage and that the primary on-call engineer should be paged.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 0,
+        "partial": 1,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 0.5
+      }
     },
     {
       "id": "Q035",
@@ -692,7 +1190,7 @@
       "correctness": {
         "score": 2,
         "max_score": 2,
-        "explanation": "The system's answer correctly identifies SEV3 as degraded performance and includes the necessary actions of creating a ticket and monitoring closely, matching the expected answer."
+        "explanation": "The system's answer correctly identifies SEV3 as degraded performance and includes the appropriate actions of creating a ticket and monitoring closely, matching the expected answer."
       },
       "idk_result": {
         "score": 2,
@@ -700,7 +1198,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "incidents",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "It should be handled by creating a ticket and monitoring the situation closely .",
+            "verdict": "PARTIAL",
+            "explanation": "PARTIAL - the source text mentions creating a ticket and monitoring closely as part of the response steps for a SEV3 incident, but does not specify that this is the only way to handle incidents.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 0,
+        "partial": 1,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 0.5
+      }
     },
     {
       "id": "Q036",
@@ -720,7 +1233,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "incidents",
-      "difficulty": "medium"
+      "difficulty": "medium",
+      "verification": {
+        "results": [
+          {
+            "claim": "Recent deployment causing regressions .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim as it explicitly mentions \"Recent deployment causing regressions\" as a step to check when the error rate exceeds 1%.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q037",
@@ -732,7 +1260,7 @@
       "correctness": {
         "score": 2,
         "max_score": 2,
-        "explanation": "The system's answer correctly states that status should be communicated every 15 minutes during an incident, matching the expected answer."
+        "explanation": "The system's answer correctly states the frequency of status communication during an incident, matching the expected answer."
       },
       "idk_result": {
         "score": 2,
@@ -740,7 +1268,28 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "incidents",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "Status should be communicated every 15 minutes during an incident .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim. \n\nThe text explicitly states to \"Communicate status every 15 minutes,\" which aligns with the claim regarding communication during an incident.",
+            "citation_number": 1
+          },
+          {
+            "claim": "Status should be communicated every 15 minutes during an incident .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim. \n\nThe source text explicitly states that status should be communicated every 15 minutes during an incident.",
+            "citation_number": 2
+          }
+        ],
+        "supported": 2,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 2,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q038",
@@ -760,7 +1309,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "api",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "GET /auth/verify returns 200 if the token is valid .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text explicitly states that it returns 200 if the token is valid, which directly supports the claim.",
+            "citation_number": 2
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q039",
@@ -780,7 +1344,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "api",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "password (string, required): The user's password .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text directly supports this claim as it explicitly states that the password is a required string in the request body for the login authentication.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q040",
@@ -792,7 +1371,7 @@
       "correctness": {
         "score": 2,
         "max_score": 2,
-        "explanation": "The system's answer correctly states that POST /auth/logout invalidates the user's current session token, which matches the expected answer."
+        "explanation": "The system's answer correctly states that POST /auth/logout invalidates the user's current session token, which matches the expected answer exactly."
       },
       "idk_result": {
         "score": 2,
@@ -800,7 +1379,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "api",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "POST /auth/logout invalidates the user's current session token .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED  \nThe source text explicitly states that the POST /auth/logout endpoint invalidates the user's current session token.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q041",
@@ -812,7 +1406,7 @@
       "correctness": {
         "score": 2,
         "max_score": 2,
-        "explanation": "The system's answer correctly lists all five incident response steps as outlined in the expected answer, matching both the content and order."
+        "explanation": "The system's answer correctly lists all five incident response steps as outlined in the expected answer, matching the content and order."
       },
       "idk_result": {
         "score": 2,
@@ -820,7 +1414,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "incidents",
-      "difficulty": "medium"
+      "difficulty": "medium",
+      "verification": {
+        "results": [
+          {
+            "claim": "Communicate status every 15 minutes .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim.  \nThe source text explicitly states to \"Communicate status every 15 minutes,\" which directly aligns with the claim.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q042",
@@ -840,7 +1449,22 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "incidents",
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "verification": {
+        "results": [
+          {
+            "claim": "An alert must be acknowledged in PagerDuty within 5 minutes .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim because it explicitly states that an alert must be acknowledged in PagerDuty within 5 minutes.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q043",
@@ -860,13 +1484,28 @@
         "explanation": "Attempted to answer an answerable question"
       },
       "category": "incidents",
-      "difficulty": "medium"
+      "difficulty": "medium",
+      "verification": {
+        "results": [
+          {
+            "claim": "An incident report should include the timeline, root cause, and action items .",
+            "verdict": "SUPPORTED",
+            "explanation": "SUPPORTED - the source text directly supports this claim. \n\nThe source text explicitly states that an incident report should include the timeline, root cause, and action items.",
+            "citation_number": 1
+          }
+        ],
+        "supported": 1,
+        "partial": 0,
+        "unsupported": 0,
+        "total_claims": 1,
+        "citation_score": 1.0
+      }
     },
     {
       "id": "Q044",
       "question": "What is the database schema for the users table?",
       "expected_answer": null,
-      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.txt, sample.md, sample.html\nHowever, the confidence score (0.175) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.md, sample.html, sample.txt\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
       "answer_exists": false,
       "confident": false,
       "correctness": {
@@ -879,13 +1518,14 @@
         "explanation": "Correctly said IDK for unanswerable question"
       },
       "category": "engineering",
-      "difficulty": "unanswerable"
+      "difficulty": "unanswerable",
+      "verification": null
     },
     {
       "id": "Q045",
       "question": "Who is the current on-call engineer?",
       "expected_answer": null,
-      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.md, sample.txt, sample.pdf\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.md, sample.pdf, sample.txt\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
       "answer_exists": false,
       "confident": false,
       "correctness": {
@@ -898,7 +1538,8 @@
         "explanation": "Correctly said IDK for unanswerable question"
       },
       "category": "incidents",
-      "difficulty": "unanswerable"
+      "difficulty": "unanswerable",
+      "verification": null
     },
     {
       "id": "Q046",
@@ -917,13 +1558,14 @@
         "explanation": "Correctly said IDK for unanswerable question"
       },
       "category": "hr",
-      "difficulty": "unanswerable"
+      "difficulty": "unanswerable",
+      "verification": null
     },
     {
       "id": "Q047",
       "question": "What is the office address?",
       "expected_answer": null,
-      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.pdf, sample.html\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.html, sample.pdf\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
       "answer_exists": false,
       "confident": false,
       "correctness": {
@@ -936,13 +1578,14 @@
         "explanation": "Correctly said IDK for unanswerable question"
       },
       "category": "hr",
-      "difficulty": "unanswerable"
+      "difficulty": "unanswerable",
+      "verification": null
     },
     {
       "id": "Q048",
       "question": "Which cloud provider hosts the infrastructure?",
       "expected_answer": null,
-      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.txt, sample.md, sample.pdf\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.md, sample.pdf, sample.txt\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
       "answer_exists": false,
       "confident": false,
       "correctness": {
@@ -955,13 +1598,14 @@
         "explanation": "Correctly said IDK for unanswerable question"
       },
       "category": "engineering",
-      "difficulty": "unanswerable"
+      "difficulty": "unanswerable",
+      "verification": null
     },
     {
       "id": "Q049",
       "question": "What is the SLA for the authentication service?",
       "expected_answer": null,
-      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.txt, sample.md, sample.html\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.md, sample.html, sample.txt\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
       "answer_exists": false,
       "confident": false,
       "correctness": {
@@ -974,13 +1618,14 @@
         "explanation": "Correctly said IDK for unanswerable question"
       },
       "category": "engineering",
-      "difficulty": "unanswerable"
+      "difficulty": "unanswerable",
+      "verification": null
     },
     {
       "id": "Q050",
       "question": "What version of Python does the service use?",
       "expected_answer": null,
-      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.txt, sample.md, sample.html\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
+      "actual_answer": "I don't have enough information in the provided documentation to fully answer this question.\n\nI found potentially related content in: sample.md, sample.html, sample.txt\nHowever, the confidence score (0.3) was below the threshold (0.5), suggesting the retrieved content may not directly answer your question.\n\nYou may want to check these documents manually or rephrase your question.",
       "answer_exists": false,
       "confident": false,
       "correctness": {
@@ -993,7 +1638,8 @@
         "explanation": "Correctly said IDK for unanswerable question"
       },
       "category": "engineering",
-      "difficulty": "unanswerable"
+      "difficulty": "unanswerable",
+      "verification": null
     }
   ]
 }

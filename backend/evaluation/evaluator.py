@@ -110,7 +110,7 @@ def run_eval(max_questions: int = None) -> dict:
         pipeline_result = full_pipeline(q["question"])
         actual_answer   = pipeline_result["answer"]
         confident       = pipeline_result["confident"]
-
+        verification    = pipeline_result.get("verification")
         idk_result = score_idk_correctness(actual_answer, q["answer_exists"])
 
         if q["answer_exists"]:
@@ -138,6 +138,7 @@ def run_eval(max_questions: int = None) -> dict:
             "idk_result":       idk_result,
             "category":         q["category"],
             "difficulty":       q["difficulty"],
+            "verification":     verification,
         }
         results.append(result)
 
